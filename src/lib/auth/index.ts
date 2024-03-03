@@ -1,12 +1,11 @@
 import NextAuth from "next-auth";
-import { Role } from "@prisma/client";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
-import { db } from "@/lib/db";
 import authConfig from "@/lib/auth/config";
-import { getUserById } from "@/lib/db/queries/users";
-import { getTwoFactorConfirmationByUserId } from "@/lib/db/queries/two-factor-confirmations";
+import { db } from "@/lib/db";
 import { getAccountByUserId } from "@/lib/db/queries/accounts";
+import { getTwoFactorConfirmationByUserId } from "@/lib/db/queries/two-factor-confirmations";
+import { getUserById } from "@/lib/db/queries/users";
 
 export const {
   handlers: { GET, POST },
@@ -21,32 +20,69 @@ export const {
     signIn: "/auth/login",
     error: "/auth/error",
   },
-  events: {
-    async linkAccount({ user }) {
-      await db.user.update({
-        where: { id: user.id },
-        data: { emailVerified: new Date() },
-      });
-    },
-  },
   callbacks: {
+    async jwt({ token }) {
+      if (!token.sub) return token;
+
+      const existingUser = await getUserById(token.sub);
+
+      if (!existingUser) return token;
+      token.name = existingUser.name;
+      token.email = existingUser.email;
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
+      token.role = existingUser.role;
+
+      const existingAccount = await getAccountByUserId(existingUser.id);
+      token.isOAuth = !!existingAccount;
+
+      return token;
+    },
+    async session({ token, session }) {
+      if (token.sub && session.user) {
+        session.user.id = token.sub;
+      }
+
+      if (token.name && session.user) {
+        session.user.name = token.name;
+      }
+
+      if (token.email && session.user) {
+        session.user.email = token.email;
+      }
+
+      if (token.isTwoFactorEnabled && session.user) {
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled;
+      }
+
+      if (token.role && session.user) {
+        session.user.role = token.role;
+      }
+
+      if (token.isOAuth && session.user) {
+        session.user.isOAuth = token.isOAuth;
+      }
+
+      return session;
+    },
     async signIn({ user, account }) {
-      // Allow OAuth without email verification
+      // Allow OAuth Sign In without Email Verification
       if (account?.provider !== "credentials") return true;
 
-      const existingUser = await getUserById(user.id!);
+      const dbUser = await getUserById(user.id!);
 
-      // Prevent sign in without email verification
-      if (!existingUser?.emailVerified) return false;
+      // Prevent Sign In without Email Verification
+      if (!dbUser?.emailVerified) return false;
 
-      if (existingUser.isTwoFactorEnabled) {
+      // Check if 2FA is enabled
+      if (dbUser.isTwoFactorEnabled) {
         const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
-          existingUser.id
+          dbUser.id
         );
 
+        // Prevent Sign In without 2FA Confirmation
         if (!twoFactorConfirmation) return false;
 
-        // Delete two factor confirmation for next sign in
+        // Delete 2FA Confirmation for next Sign In
         await db.twoFactorConfirmation.delete({
           where: { id: twoFactorConfirmation.id },
         });
@@ -54,43 +90,13 @@ export const {
 
       return true;
     },
-    async session({ token, session }) {
-      if (token.sub && session.user) {
-        session.user.id = token.sub;
-      }
-
-      if (token.role && session.user) {
-        session.user.role = token.role as Role;
-      }
-
-      if (session.user) {
-        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
-      }
-
-      if (session.user) {
-        session.user.name = token.name;
-        session.user.email = token.email!;
-        session.user.isOAuth = token.isOAuth as boolean;
-      }
-
-      return session;
-    },
-    async jwt({ token }) {
-      if (!token.sub) return token;
-
-      const existingUser = await getUserById(token.sub);
-
-      if (!existingUser) return token;
-
-      const existingAccount = await getAccountByUserId(existingUser.id);
-
-      token.isOAuth = !!existingAccount;
-      token.name = existingUser.name;
-      token.email = existingUser.email;
-      token.role = existingUser.role;
-      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
-
-      return token;
+  },
+  events: {
+    async linkAccount({ user }) {
+      await db.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() },
+      });
     },
   },
 
