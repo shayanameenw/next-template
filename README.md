@@ -7,7 +7,7 @@ This is a repository for Next.js Template with Shadcn UI and Auth.js v5.
 - 🌐 Social Login (Google/GitHub)
 - ✉️ Email Verification
 - 🔒 Forgot Password
-- 📱 Two Factor Verification
+- 📱 Two Factor Authentication
 - 👥 User Roles (Admin/User)
 - 🔓 Login/Register/Logout Button (Redirect/Modal)
 - 🚧 Role Gate (Render Content only for Admin)
