@@ -15,7 +15,7 @@ This is a repository for Next.js Template with Shadcn UI and Auth.js v5.
 - 👤 useCurrentUser/useCurrentRole hooks for Client Component
 - 🧑 getCurrentUser getCurrentRole functions for Server Component
 - 🖥️ Example with Server & Client component
-- 🛡️ Example Protect API Routes & Server Actions for Admins Only
+- 🛡️ Example of API Routes & Server Actions for Admins Only
 - 🔑 Example of changing Email with Verification, Password with Old Password, & User Role & Enable/disable Two Factor Auth
 
 ### Clone Repository
