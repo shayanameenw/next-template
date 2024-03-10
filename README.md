@@ -1,6 +1,6 @@
-# Next.js + Shadcn + Auth.js Template
+# Next.js + Prisma + Auth.js + Shadcn Template
 
-Opiniated Next.js Template with Shadcn and Auth.js v5.
+Opiniated Next.js Template with Prisma, Auth.js v5 and Shadcn.
 
 - 🚀 Next.js 14
 - 🔐 Auth.js v5
