@@ -10,7 +10,7 @@ This is a repository for Next.js Template with Shadcn UI and Auth.js v5.
 - 📱 Two Factor Authentication
 - 👥 Roles (Admin/User)
 - 🔓 Login/Register/Logout Button (Redirect/Modal)
-- 🚧 Role Gate (Render Content only for Admin)
+- 🚧 Role Gate (Render Content only for Specific Role)
 - ⚠️ Success & Error Component
 - 👤 useCurrentUser/useCurrentRole hooks for Client Component
 - 🧑 getCurrentUser getCurrentRole functions for Server Component
