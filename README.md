@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js + Shadcn UI + Auth.js Template
 
-## Getting Started
+This is a repository for Next.js Template with Tailwindcss, Shadcn UI and Auth.js v5.
 
-First, run the development server:
+Key Features:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- 🚀 Next.js 14
+- 🔐 Auth.js v5
+- 🌐 Social Login (Google/GitHub)
+- ✉️ Email Verification
+- 🔒 Forgot Password
+- 📱 Two Factor Verification
+- 👥 User Roles (Admin/User)
+- 🔓 Login/Register/Logout Button (Redirect/Modal)
+- 🚧 Role Gate (Render Content only for Admin)
+- ⚠️ Success & Error Component
+- 👤 useCurrentUser/useCurrentRole hooks for Client Component
+- 🧑 getCurrentUser getCurrentRole functions for Server Component
+- 🖥️ Example with Server & Client component
+- 🛡️ Example Protect API Routes & Server Actions for Admins Only
+- 📧 Change email with new verification in Settings page
+- 🔑 Example of changing Email with Verification, Password with Old Password, & User Role & Enable/disable Two Factor Auth
+
+### Clone Repository
+
+```shell
+git clone https://github.com/shayan-workspace/next-template.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Install Dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```shell
+npm i
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Setup .env File
 
-## Learn More
+```shell
+DATABASE_URL=
 
-To learn more about Next.js, take a look at the following resources:
+AUTH_SECRET=
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
 
-## Deploy on Vercel
+RESEND_API_KEY=
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+NEXT_PUBLIC_APP_URL=
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Setup Prisma
+
+```shell
+npx prisma generate
+npx prisma db push
+```
+
+### Start Development Server
+
+```shell
+npm run dev
+```
+
+## Available Commands
+
+Running commands with npm `npm run [command]`
+
+| Command | Description               |
+| :------ | :------------------------ |
+| `dev`   | Starts Development Server |
+| `build` | Optimize Production App   |
+| `start` | Starts App                |
+| `lint`  | Lint Code                 |
