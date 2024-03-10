@@ -1,35 +1,19 @@
-import { Poppins } from "next/font/google";
+import { ThemeMenu } from "@/components/theme/theme-menu";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { LoginButton } from "@/components/auth/buttons/login-button";
+import { RegisterRequestButton } from "@/components/auth/buttons/register-request-button";
+import { LogoutButton } from "@/components/auth/buttons/logout-button";
 
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { LoginButton } from "@/components/auth/login-button";
-
-const font = Poppins({
-  subsets: ["latin"],
-  weight: ["600"]
-})
-
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="flex h-full flex-col items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-400 to-blue-800">
-      <div className="space-y-6 text-center">
-        <h1 className={cn(
-          "text-6xl font-semibold text-white drop-shadow-md",
-          font.className,
-        )}>
-          🔐 Auth
-        </h1>
-        <p className="text-white text-lg">
-          A simple authentication service
-        </p>
-        <div>
-          <LoginButton  asChild>
-            <Button variant="secondary" size="lg">
-              Sign in
-            </Button>
-          </LoginButton>
-        </div>
-      </div>
+    <main>
+      <section className="min-h-screen flex gap-4 justify-center items-center">
+        <ThemeMenu />
+        <LoginButton size="lg">Login</LoginButton>
+        <RegisterRequestButton size="lg">Register</RegisterRequestButton>
+        <LogoutButton size="lg">Logout</LogoutButton>
+        <ThemeToggle />
+      </section>
     </main>
-  )
+  );
 }

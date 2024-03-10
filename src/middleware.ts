@@ -7,7 +7,9 @@ import {
   API_AUTH_PREFIX,
   PUBLIC_ROUTES,
   AUTH_ROUTES,
-} from "@/routes";
+} from "@/routes/config";
+
+import { authPaths } from "@/routes/paths";
 
 const { auth } = NextAuth(authConfig);
 
@@ -41,8 +43,10 @@ export default auth((req) => {
 
     const encodedCallbackUrl = encodeURIComponent(callbackUrl);
 
+    const loginPath = authPaths.login();
+
     return Response.redirect(
-      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
+      new URL(`${loginPath}?callbackUrl=${encodedCallbackUrl}`, nextUrl)
     );
   }
 

@@ -1,3 +1,4 @@
+import type { ExtendedUser } from "@/types/next-auth";
 import { useSession } from "next-auth/react";
 
 export const useCurrentUser = () => {

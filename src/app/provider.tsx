@@ -3,8 +3,17 @@
 import type { PropsWithChildren } from "react";
 
 import { ThemeProvider } from "next-themes";
+import { SessionProvider } from "next-auth/react";
+import { Session } from "next-auth";
 
-export function Provider({ children }: Readonly<PropsWithChildren>) {
+interface RootProviderProps {
+  session: Session | null;
+}
+
+export function RootProvider({
+  session,
+  children,
+}: Readonly<PropsWithChildren<RootProviderProps>>) {
   return (
     <ThemeProvider
       attribute="class"
@@ -12,7 +21,7 @@ export function Provider({ children }: Readonly<PropsWithChildren>) {
       enableSystem
       disableTransitionOnChange
     >
-      {children}
+      <SessionProvider session={session}>{children}</SessionProvider>
     </ThemeProvider>
   );
 }

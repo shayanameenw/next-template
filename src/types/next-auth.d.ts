@@ -1,11 +1,11 @@
-import type { Session } from "next-auth";
+import type { User } from "next-auth";
 
 import { Role } from "@prisma/client";
 
-type ExtendedUser = Session["user"] & {
+type ExtendedUser = User & {
   role: Role;
-  isOAuth: boolean;
   isTwoFactorEnabled: boolean;
+  isSocialAccount: boolean;
 };
 
 declare module "next-auth" {

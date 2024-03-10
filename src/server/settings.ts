@@ -5,13 +5,15 @@ import bcrypt from "bcryptjs";
 
 import { unstable_update as update } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { SettingsValidator } from "@/validators";
+import { UpdateProfileValidator } from "@/validators";
 import { getUserByEmail, getUserById } from "@/lib/db/queries/users";
 import { getCurrentUser } from "@/lib/auth";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/emails";
 
-export const settings = async (values: zod.infer<typeof SettingsValidator>) => {
+export const settings = async (
+  values: zod.infer<typeof UpdateProfileValidator>
+) => {
   const user = await getCurrentUser();
 
   if (!user) {
@@ -24,7 +26,7 @@ export const settings = async (values: zod.infer<typeof SettingsValidator>) => {
     return { error: "Unauthorized" };
   }
 
-  if (user.isOAuth) {
+  if (user.isSocialAccount) {
     values.email = undefined;
     values.password = undefined;
     values.newPassword = undefined;

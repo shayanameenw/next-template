@@ -1,3 +1,5 @@
+import type { Role } from "@prisma/client";
+
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
@@ -6,6 +8,8 @@ import { db } from "@/lib/db";
 import { getAccountByUserId } from "@/lib/db/queries/accounts";
 import { getTwoFactorConfirmationByUserId } from "@/lib/db/queries/two-factor-confirmations";
 import { getUserById } from "@/lib/db/queries/users";
+
+import { authPaths } from "@/routes/paths";
 
 export const {
   handlers: { GET, POST },
@@ -17,8 +21,8 @@ export const {
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
   pages: {
-    signIn: "/auth/login",
-    error: "/auth/error",
+    signIn: authPaths.login(),
+    error: authPaths.error(),
   },
   callbacks: {
     async jwt({ token }) {
@@ -33,34 +37,17 @@ export const {
       token.role = existingUser.role;
 
       const existingAccount = await getAccountByUserId(existingUser.id);
-      token.isOAuth = !!existingAccount;
+      token.isSocialAccount = !!existingAccount;
 
       return token;
     },
     async session({ token, session }) {
-      if (token.sub && session.user) {
-        session.user.id = token.sub;
-      }
-
-      if (token.name && session.user) {
-        session.user.name = token.name;
-      }
-
-      if (token.email && session.user) {
-        session.user.email = token.email;
-      }
-
-      if (token.isTwoFactorEnabled && session.user) {
-        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled;
-      }
-
-      if (token.role && session.user) {
-        session.user.role = token.role;
-      }
-
-      if (token.isOAuth && session.user) {
-        session.user.isOAuth = token.isOAuth;
-      }
+      session.user.id = token.sub as string;
+      session.user.name = token.name as string;
+      session.user.email = token.email as string;
+      session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
+      session.user.role = token.role as Role;
+      session.user.isSocialAccount = token.isSocialAccount as boolean;
 
       return session;
     },
@@ -73,7 +60,7 @@ export const {
       // Prevent Sign In without Email Verification
       if (!dbUser?.emailVerified) return false;
 
-      // Check if 2FA is enabled
+      // Check 2FA is enabled
       if (dbUser.isTwoFactorEnabled) {
         const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
           dbUser.id
