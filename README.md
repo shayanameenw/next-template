@@ -31,7 +31,7 @@ git clone https://github.com/shayan-workspace/next-template.git
 ### Install Dependencies
 
 ```shell
-npm i
+pnpm i
 ```
 
 ### Setup .env File
@@ -55,19 +55,19 @@ NEXT_PUBLIC_APP_URL=
 ### Setup Prisma
 
 ```shell
-npx prisma generate
-npx prisma db push
+pnpm dlx prisma generate
+pnpm dlx prisma db push
 ```
 
 ### Start Development Server
 
 ```shell
-npm run dev
+pnpm dev
 ```
 
 ## Available Commands
 
-Running commands with npm `npm run [command]`
+Running commands with npm `pnpm [command]`
 
 | Command | Description               |
 | :------ | :------------------------ |
