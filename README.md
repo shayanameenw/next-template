@@ -18,6 +18,10 @@ Opiniated Next.js Template with Prisma, Auth.js v5 and Shadcn.
 - 🛡️ Example of API Routes & Server Actions for Admins Only
 - 🔑 Example of changing Email with Verification, Password with Old Password, & User Role & Enable/disable Two Factor Auth
 
+### Limitation
+
+- Until you register a domain in Resend dashboard, Emails will be only send to the developer account of Resend.
+
 ### Clone Repository
 
 ```shell
