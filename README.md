@@ -20,7 +20,7 @@ Opiniated Next.js Template with Prisma, Auth.js v5 and Shadcn.
 
 ### Limitation
 
-- Until you register a domain in Resend dashboard, Emails will be only send to the developer account of Resend.
+- Until you register a domain in Resend dashboard, Emails will only be send to the developer account of Resend.
 
 ### Clone Repository
 
