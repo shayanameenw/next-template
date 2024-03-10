@@ -4,7 +4,7 @@ This is a repository for Next.js Template with Shadcn UI and Auth.js v5.
 
 - 🚀 Next.js 14
 - 🔐 Auth.js v5
-- 🌐 Social Login (Google/GitHub)
+- 🌐 Social Login (GitHub/Google)
 - ✉️ Email Verification
 - 🔒 Forgot Password
 - 📱 Two Factor Authentication
