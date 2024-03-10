@@ -18,7 +18,6 @@ Key Features:
 - 🧑 getCurrentUser getCurrentRole functions for Server Component
 - 🖥️ Example with Server & Client component
 - 🛡️ Example Protect API Routes & Server Actions for Admins Only
-- 📧 Change email with new verification in Settings page
 - 🔑 Example of changing Email with Verification, Password with Old Password, & User Role & Enable/disable Two Factor Auth
 
 ### Clone Repository
