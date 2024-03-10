@@ -1,6 +1,6 @@
 # Next.js + Shadcn + Auth.js Template
 
-This is a repository for Next.js Template with Shadcn UI and Auth.js v5.
+Opiniated Next.js Template with Shadcn and Auth.js v5.
 
 - 🚀 Next.js 14
 - 🔐 Auth.js v5
